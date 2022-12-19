@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--=============== REMIXICONS ===============-->
+        
+
+        <!--=============== CSS ===============-->
+        <link rel="stylesheet" href="assets/css/styles.css">
+
+        <title>Live battery percentage - Bedimcode</title>
+    </head>
+    <body>
+        <!--=============== BATTERY ===============-->
+        <section class="battery">
+            <div class="textbox">
+            
+            <h2>Battery</h2>
+            <h1 id="btn">50%</h1>
+            <h4 id="ch">indicate the battery</h4>
+             </div>
+             
+             <div class="cly">
+             
+             <div class="level">
+             <div class="color" id="aa">
+             
+             </div>
+             
+             </div>
+             
+             </div>
+             
+        </section>
+
+        <!--=============== MAIN JS ===============-->
+        <script>
+        navigator.getBattery().then(function(battery) {
+        var btn = document.getElementById('btn');
+        
+        var level = battery.level;
+        btn.innerHTML = level*100 +"%";
+        var aa =document.getElementById('aa');
+        var b= "height:"+level*100+'%';
+        console.log(b)
+        aa.setAttribute("style",b);
+        
+        navigator.getBattery().then((battery) => {
+        var charging = battery.charging;
+        var d= charging.toString();
+        console.log(d=="false");
+        
+        if (battery.charging){
+        document.getElementById('ch').innerHTML= "charging";
+        aa.setAttribute("style","background:linear-gradient(90deg,hsl(92, 89%, 46%) 15%,hsl(92, 90%, 68%) 100%);"+b);
+        }
+        
+        });
+       
+        
+      
+        });
+        
+        
+        
+        let batteryIsCharging = false;
+        
+        
+        navigator.getBattery().then((battery) => {
+        batteryIsCharging = battery.charging;
+        var level = battery.level;
+        
+        var b= "height:"+level*100+'%';
+        
+        battery.addEventListener('chargingchange', () => {
+        if (battery.charging){
+        document.getElementById('ch').innerHTML= "charging";
+        aa.setAttribute("style","background:linear-gradient(90deg,hsl(92, 89%, 46%) 15%,hsl(92, 90%, 68%) 100%);"+b);
+        }
+        else{
+        document.getElementById('ch').innerHTML= "Not charging";
+        aa.setAttribute("style","background:linear-gradient(90deg,hsl(7, 89%, 46%) 15%, hsl(11, 93%, 68%) 100%);"+b);
+        }
+        });
+        });
+        
+        console.log(batteryIsCharging)
+        
+        
+        
+        
+        </script>
+    </body>
+</html>
